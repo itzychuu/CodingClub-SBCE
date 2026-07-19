@@ -348,7 +348,7 @@ export default function AdminView({
               <Lock className="w-6 h-6" />
             </div>
             <div>
-              <h1 className="text-xl font-bold font-mono text-white">Admin Headquarters</h1>
+              <h1 className="text-xl font-bold font-mono text-white">Admin Control</h1>
               <p className="text-neutral-500 text-xs mt-1">CSE SBCE Coding Club Portal</p>
             </div>
           </div>
@@ -369,7 +369,7 @@ export default function AdminView({
                   id="login-email"
                   type="email"
                   required
-                  placeholder="admin@sbce.ac.in"
+                  placeholder="email address"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="w-full bg-black border border-neutral-850 rounded-xl py-2.5 pl-10 pr-4 text-xs text-white placeholder-neutral-600 focus:outline-none focus:border-orange-500/50"
@@ -387,7 +387,7 @@ export default function AdminView({
                   id="login-password"
                   type={showPassword ? "text" : "password"}
                   required
-                  placeholder="••••••••"
+                  placeholder="*******"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="w-full bg-black border border-neutral-850 rounded-xl py-2.5 pl-10 pr-10 text-xs text-white placeholder-neutral-600 focus:outline-none focus:border-orange-500/50"
@@ -414,13 +414,6 @@ export default function AdminView({
           </form>
 
           {/* Quick instructions containing default test credentials */}
-          <div className="mt-8 border-t border-neutral-900/60 pt-4 text-center">
-            <span className="text-[10px] font-mono text-orange-500 uppercase tracking-wider block mb-1">Developer Sandbox Info</span>
-            <div className="bg-neutral-950/80 p-2 border border-neutral-900 rounded-lg text-[10px] text-neutral-500 font-mono flex flex-col gap-1 items-center">
-              <span>Email: <b className="text-white">admin@sbce.ac.in</b></span>
-              <span>Password: <b className="text-white">admin</b></span>
-            </div>
-          </div>
         </div>
       </div>
     );
