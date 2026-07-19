@@ -22,7 +22,7 @@ export default function Header({ currentTab, setTab, isAuthenticated, onLogout }
   const navItems = [
     { id: 'home', label: 'Home' },
     { id: 'events', label: 'Event' },
-    { id: 'about', label: 'About' },
+    { id: 'about', label: 'Execom' },
     { id: 'gallery', label: 'Gallery' },
     { id: 'contact', label: 'Contact' },
   ];

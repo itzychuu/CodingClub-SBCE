@@ -31,86 +31,6 @@ export default function AboutView({ settings, members }: AboutViewProps) {
 
   return (
     <div className="space-y-16 pb-20" id="about-view">
-      {/* 4.4 Header */}
-      <div className="space-y-4 max-w-2xl" id="about-header">
-        <h1 className="text-3xl md:text-5xl font-black text-white tracking-tight font-mono border-l-4 border-orange-500 pl-4">
-          Our Foundation
-        </h1>
-        <p className="text-neutral-400 text-sm md:text-base leading-relaxed">
-          The CSE Coding Club of Sree Buddha College of Engineering is an incubator built for student engineering growth and collaborative community innovation.
-        </p>
-      </div>
-
-      {/* History and Objectives Cards */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch" id="foundation-cards">
-        <div className="lg:col-span-7 bg-zinc-950/40 border border-neutral-900 rounded-xl p-6 md:p-8 flex flex-col justify-between space-y-6">
-          <div className="space-y-4">
-            <h2 className="text-lg font-bold font-mono text-white flex items-center gap-2">
-              <span className="w-2.5 h-2.5 bg-orange-500 rounded-sm"></span>
-              Our History
-            </h2>
-            <p className="text-neutral-400 text-xs md:text-sm leading-relaxed whitespace-pre-line">
-              {settings.aboutHistory || "Established in 2021 by the Department of Computer Science & Engineering, the SBCE Coding Club has grown into the campus hub for technological leadership. We connect aspiring programmers, open-source advocates, and problem solvers to learn together, build for the community, and prepare for premium tech careers."}
-            </p>
-          </div>
-          <div className="grid grid-cols-2 gap-4 border-t border-neutral-900/60 pt-6">
-            <div className="p-4 bg-black border border-neutral-900 rounded-lg">
-              <span className="text-[10px] uppercase font-mono text-neutral-500 block">Mission</span>
-              <p className="text-neutral-300 text-xs font-mono mt-1">{settings.aboutMission || "To build a vibrant coding culture in SBCE and empower students to solve real-world problems using software engineering."}</p>
-            </div>
-            <div className="p-4 bg-black border border-neutral-900 rounded-lg">
-              <span className="text-[10px] uppercase font-mono text-neutral-500 block">Vision</span>
-              <p className="text-neutral-300 text-xs font-mono mt-1">{settings.aboutVision || "To produce top-tier technical talent capable of engineering solutions for national and global challenges, setting a benchmark for student-run technical communities in Kerala."}</p>
-            </div>
-          </div>
-        </div>
-
-        {/* Core Objectives List */}
-        <div className="lg:col-span-5 bg-zinc-950/40 border border-neutral-900 rounded-xl p-6 md:p-8 space-y-6">
-          <h2 className="text-lg font-bold font-mono text-white flex items-center gap-2">
-            <span className="w-2.5 h-2.5 bg-orange-500 rounded-sm"></span>
-            Club Objectives
-          </h2>
-          <ul className="space-y-4 text-xs md:text-sm text-neutral-400" id="objectives-list">
-            {(settings.aboutObjectives || [
-              "Conduct weekly technical workshops on cutting-edge technologies.",
-              "Host annual national-level hackathons.",
-              "Foster open-source contribution and collaborative development.",
-              "Provide mentorship for technical interview preparation and coding competitions."
-            ]).map((obj, i) => (
-              <li key={i} className="flex items-start gap-3">
-                <ShieldCheck className="w-4 h-4 text-orange-500 shrink-0 mt-0.5" />
-                <span className="leading-relaxed text-neutral-300">{obj}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-
-      {/* Faculty Coordinators Section */}
-      <section className="space-y-8" id="faculty-coordinators-section">
-        <h2 className="text-xl md:text-2xl font-bold font-mono text-white border-l-4 border-orange-500 pl-3">
-          Faculty Coordinators & Mentors
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6" id="faculty-grid">
-          {(settings.aboutCoordinators || [
-            { name: "Dr. Saji V.R.", title: "HOD, CSE Dept" },
-            { name: "Prof. Soumya Murali", title: "Assistant Professor, CSE Dept" }
-          ]).map((coord, i) => (
-            <div key={i} id={`faculty-card-${i}`} className="bg-black border border-neutral-900 rounded-xl p-6 flex items-center gap-4 hover:border-neutral-800 transition-colors">
-              <div className="w-12 h-12 rounded-full bg-orange-500/10 border border-orange-500/20 flex items-center justify-center text-orange-500 font-mono text-lg font-bold shrink-0">
-                {coord.name.split(' ').pop()?.charAt(0) || 'F'}
-              </div>
-              <div>
-                <h3 className="text-base font-bold text-white font-mono leading-tight">{coord.name}</h3>
-                <p className="text-xs text-orange-500 font-mono mt-0.5">{coord.title}</p>
-                <p className="text-neutral-500 text-[11px] mt-1">Sree Buddha College of Engineering</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
       {/* 4.2 Executive Committee Module */}
       <section className="space-y-8" id="execom-module-section">
         <div className="border-t border-neutral-900 pt-10 flex flex-col md:flex-row items-start md:items-end justify-between gap-6">
@@ -153,39 +73,114 @@ export default function AboutView({ settings, members }: AboutViewProps) {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="execom-full-grid">
           {filteredLeaders.length > 0 ? (
             filteredLeaders.map((mem) => (
-              <div key={mem.id} id={`roster-card-${mem.id}`} className="bg-zinc-950/40 border border-neutral-900 rounded-xl overflow-hidden p-5 hover:border-neutral-800 transition-all group flex flex-col justify-between">
-                <div className="space-y-4">
-                  <div className="aspect-square w-full rounded-lg overflow-hidden bg-neutral-950 border border-neutral-900">
-                    <img src={mem.image} alt={mem.name} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" />
+              <div
+                key={mem.id}
+                id={`roster-card-${mem.id}`}
+                className="
+                  group relative flex flex-col justify-between p-5 rounded-2xl overflow-hidden
+                  bg-white/[0.03] border border-white/10 backdrop-blur-xl
+                  shadow-[0_8px_32px_rgba(0,0,0,0.35)]
+                  transition-all duration-500 ease-out
+                  hover:-translate-y-1.5 hover:border-orange-500/30
+                  hover:shadow-[0_20px_50px_rgba(0,0,0,0.5),0_0_40px_rgba(255,107,0,0.12)]
+                "
+              >
+                {/* Gradient ring glow on hover */}
+                <div
+                  className="
+                    pointer-events-none absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100
+                    transition-opacity duration-500
+                    bg-[radial-gradient(120%_60%_at_50%_0%,rgba(255,107,0,0.12),transparent_70%)]
+                  "
+                />
+
+                <div className="relative space-y-4">
+                  {/* Photo */}
+                  <div className="relative aspect-square w-full rounded-xl overflow-hidden bg-neutral-950 border border-white/10">
+                    <img
+                      src={mem.image}
+                      alt={mem.name}
+                      className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700 ease-out"
+                    />
+                    {/* Bottom gradient wash for text legibility / depth */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-70 group-hover:opacity-40 transition-opacity duration-500" />
+                    {/* Diagonal shine sweep */}
+                    <div
+                      className="
+                        absolute top-0 -left-full w-1/2 h-full
+                        bg-gradient-to-r from-transparent via-white/25 to-transparent
+                        skew-x-[-20deg] group-hover:left-[150%]
+                        transition-[left] duration-1000 ease-out
+                      "
+                    />
                   </div>
+
                   <div className="space-y-2">
-                    <span className="font-mono text-[10px] uppercase text-orange-500 tracking-wider font-bold">{mem.position}</span>
-                    <h3 className="text-base font-bold text-white font-mono leading-tight">{mem.name}</h3>
-                    <p className="text-neutral-400 text-xs leading-relaxed">{mem.bio}</p>
+                    <h5 className="text-base font-bold text-white font-mono leading-tight group-hover:text-orange-400 transition-colors duration-300">
+                      {mem.position}
+                    </h5>
+                    <h3 className="text-base font-bold text-white font-mono leading-tight group-hover:text-orange-400 transition-colors duration-300">
+                      {mem.name}
+                    </h3>
+                    <p className="text-neutral-400 text-xs leading-relaxed line-clamp-3">{mem.bio}</p>
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between pt-4 mt-4 border-t border-neutral-950">
-                  <span className="font-mono text-[9px] text-neutral-600">ID: {mem.id}</span>
-                  {/* Social links */}
+                <div className="relative flex items-center justify-between pt-4 mt-4 border-t border-white/10">
+
+                  {/* Social links – slide/fade in on hover */}
                   <div className="flex items-center gap-3 text-neutral-500">
                     {mem.github && (
-                      <a href={mem.github} target="_blank" rel="noreferrer" className="hover:text-white transition-colors">
+                      <a
+                        href={mem.github}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="
+                          p-1.5 rounded-full border border-transparent
+                          hover:text-white hover:bg-white/10 hover:border-white/15
+                          hover:-translate-y-0.5 transition-all duration-300
+                        "
+                      >
                         <Github className="w-4 h-4" />
                       </a>
                     )}
                     {mem.linkedin && (
-                      <a href={mem.linkedin} target="_blank" rel="noreferrer" className="hover:text-white transition-colors">
+                      <a
+                        href={mem.linkedin}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="
+                          p-1.5 rounded-full border border-transparent
+                          hover:text-white hover:bg-white/10 hover:border-white/15
+                          hover:-translate-y-0.5 transition-all duration-300
+                        "
+                      >
                         <Linkedin className="w-4 h-4" />
                       </a>
                     )}
                     {mem.instagram && (
-                      <a href={mem.instagram} target="_blank" rel="noreferrer" className="hover:text-white transition-colors">
+                      <a
+                        href={mem.instagram}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="
+                          p-1.5 rounded-full border border-transparent
+                          hover:text-white hover:bg-white/10 hover:border-white/15
+                          hover:-translate-y-0.5 transition-all duration-300
+                        "
+                      >
                         <Instagram className="w-4 h-4" />
                       </a>
                     )}
                     {mem.email && (
-                      <a href={`mailto:${mem.email}`} className="hover:text-white transition-colors">
+                      <a
+                        href={`mailto:${mem.email}`}
+                        className="
+                          p-1.5 rounded-full border border-transparent
+                          hover:text-white hover:bg-white/10 hover:border-white/15
+                          hover:-translate-y-0.5 transition-all duration-300
+                        "
+                      >
                         <Mail className="w-4 h-4" />
                       </a>
                     )}

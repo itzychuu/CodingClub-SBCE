@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Mail, Instagram, Linkedin, Github, MapPin, Send, HelpCircle, CheckCircle2 } from 'lucide-react';
+import React from 'react';
+import { Mail, Instagram, Linkedin, Github, MapPin, ArrowUpRight } from 'lucide-react';
 import { Settings } from '../types';
 
 interface ContactViewProps {
@@ -7,23 +7,6 @@ interface ContactViewProps {
 }
 
 export default function ContactView({ settings }: ContactViewProps) {
-  const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!formData.name || !formData.email || !formData.message) return;
-
-    setIsSubmitting(true);
-    // Simulate API delay
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setIsSubmitted(true);
-      setFormData({ name: '', email: '', subject: '', message: '' });
-    }, 1200);
-  };
-
   const socials = settings.socialLinks || {
     email: "codingclub@sbce.ac.in",
     instagram: "https://instagram.com/sbce_codingclub",
@@ -33,205 +16,156 @@ export default function ContactView({ settings }: ContactViewProps) {
     mapEmbedUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3936.815309325603!2d76.6042171147889!3d9.171249993421379!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b06117f77777777%3A0x6b4f707cfbdfa9f7!2sSree%20Buddha%20College%20of%20Engineering%20%2C%20Pattoor!5e0!3m2!1sen!2sin!4v1626245999999!5m2!1sen!2sin"
   };
 
+  const socialCards = [
+    { label: 'Email Desk', value: socials.email, href: `mailto:${socials.email}`, icon: Mail },
+    { label: 'Instagram', value: '@sbce_codingclub', href: socials.instagram, icon: Instagram },
+    { label: 'LinkedIn', value: 'SBCE Coding Club', href: socials.linkedin, icon: Linkedin },
+    { label: 'GitHub Organization', value: 'sbce-codingclub', href: socials.github, icon: Github },
+  ];
+
   return (
     <div className="space-y-12 pb-20" id="contact-view">
       {/* 4.6 Header */}
       <div className="space-y-4 max-w-2xl" id="contact-header">
         <h1 className="text-3xl md:text-5xl font-black text-white tracking-tight font-mono border-l-4 border-orange-500 pl-4">
-          Contact Headquarters
+          Connect With Us
         </h1>
         <p className="text-neutral-400 text-sm md:text-base leading-relaxed">
-          Have an inquiry regarding upcoming hackathons, sponsorship slots, coordinate roles, or certificate records? Shoot us a message below.
+          Have an inquiry regarding upcoming hackathons, sponsorship slots, coordinate roles, or certificate records? Reach us through any of the channels below.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12" id="contact-grid">
-        {/* Left column - details & map */}
-        <div className="lg:col-span-5 space-y-8 flex flex-col justify-between" id="contact-details">
-          <div className="space-y-6">
-            <h2 className="text-lg font-bold font-mono text-white flex items-center gap-2">
-              <span className="w-2.5 h-2.5 bg-orange-500 rounded-sm"></span>
-              Connect Details
-            </h2>
+      {/* ─── Row 1: Social / Contact channel cards, spread full width ─── */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-6" id="contact-cards">
+        {socialCards.map((card) => (
+          <a
+            key={card.label}
+            href={card.href}
+            target={card.href.startsWith('mailto:') ? undefined : '_blank'}
+            rel="noreferrer"
+            className="
+              group relative flex flex-col items-center justify-center text-center gap-3 p-6 rounded-2xl overflow-hidden
+              bg-white/[0.03] border border-white/10 backdrop-blur-xl
+              shadow-[0_8px_32px_rgba(0,0,0,0.35)]
+              transition-all duration-500 ease-out
+              hover:-translate-y-1.5 hover:border-orange-500/30
+              hover:shadow-[0_20px_50px_rgba(0,0,0,0.5),0_0_40px_rgba(255,107,0,0.12)]
+            "
+          >
+            {/* Gradient glow on hover */}
+            <div
+              className="
+                pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100
+                transition-opacity duration-500
+                bg-[radial-gradient(120%_60%_at_50%_0%,rgba(255,107,0,0.12),transparent_70%)]
+              "
+            />
+            {/* Diagonal shine sweep */}
+            <div
+              className="
+                pointer-events-none absolute top-0 -left-full w-1/2 h-full
+                bg-gradient-to-r from-transparent via-white/10 to-transparent
+                skew-x-[-20deg] group-hover:left-[150%]
+                transition-[left] duration-1000 ease-out
+              "
+            />
+            <div className="relative w-11 h-11 rounded-xl bg-orange-500/10 border border-orange-500/20 flex items-center justify-center group-hover:bg-orange-500 group-hover:border-orange-500 transition-colors duration-300">
+              <card.icon className="w-5 h-5 text-orange-500 group-hover:text-black transition-colors duration-300" />
+            </div>
+            <div className="relative space-y-1">
+              <span className="text-[9px] font-mono text-neutral-500 uppercase tracking-wider block">{card.label}</span>
+              <span className="text-white text-xs font-mono truncate max-w-full block">{card.value}</span>
+            </div>
+            <ArrowUpRight className="relative w-3.5 h-3.5 text-neutral-600 group-hover:text-orange-400 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-all duration-300" />
+          </a>
+        ))}
+      </div>
 
-            <div className="space-y-4" id="contact-cards">
-              {/* Location Card */}
-              <div className="bg-zinc-950/40 border border-neutral-900 rounded-xl p-5 flex gap-4">
-                <MapPin className="w-5 h-5 text-orange-500 shrink-0 mt-0.5" />
-                <div>
-                  <span className="text-[10px] font-mono text-neutral-500 uppercase block">College Location</span>
-                  <p className="text-neutral-300 text-xs leading-relaxed mt-1">{socials.location}</p>
-                </div>
-              </div>
+      {/* ─── Row 2: Location details + Campus map, spread across the full width ─── */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6" id="contact-grid">
+        {/* Location Card */}
+        <div
+          className="
+            lg:col-span-4 group relative flex flex-col gap-6 p-7 rounded-2xl overflow-hidden
+            bg-white/[0.03] border border-white/10 backdrop-blur-xl
+            shadow-[0_8px_32px_rgba(0,0,0,0.35)]
+            transition-all duration-500 ease-out
+            hover:border-orange-500/30
+          "
+          id="contact-location-card"
+        >
+          <div
+            className="
+              pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100
+              transition-opacity duration-500
+              bg-[radial-gradient(120%_60%_at_0%_0%,rgba(255,107,0,0.10),transparent_70%)]
+            "
+          />
 
-              {/* Social Channels List */}
-              <div className="grid grid-cols-2 gap-4">
-                <a
-                  href={`mailto:${socials.email}`}
-                  className="bg-zinc-950/40 border border-neutral-900 rounded-xl p-4 flex flex-col items-center justify-center text-center hover:border-neutral-800 hover:bg-neutral-900/10 transition-all group"
-                >
-                  <Mail className="w-5 h-5 text-orange-500 mb-2" />
-                  <span className="text-[10px] font-mono text-neutral-500 block">Email Desk</span>
-                  <span className="text-white text-[11px] font-mono mt-1 truncate max-w-full">{socials.email}</span>
-                </a>
-
-                <a
-                  href={socials.instagram}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="bg-zinc-950/40 border border-neutral-900 rounded-xl p-4 flex flex-col items-center justify-center text-center hover:border-neutral-800 hover:bg-neutral-900/10 transition-all group"
-                >
-                  <Instagram className="w-5 h-5 text-orange-500 mb-2" />
-                  <span className="text-[10px] font-mono text-neutral-500 block">Instagram</span>
-                  <span className="text-white text-[11px] font-mono mt-1">@sbce_codingclub</span>
-                </a>
-
-                <a
-                  href={socials.linkedin}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="bg-zinc-950/40 border border-neutral-900 rounded-xl p-4 flex flex-col items-center justify-center text-center hover:border-neutral-800 hover:bg-neutral-900/10 transition-all group"
-                >
-                  <Linkedin className="w-5 h-5 text-orange-500 mb-2" />
-                  <span className="text-[10px] font-mono text-neutral-500 block">LinkedIn</span>
-                  <span className="text-white text-[11px] font-mono mt-1">SBCE Coding Club</span>
-                </a>
-
-                <a
-                  href={socials.github}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="bg-zinc-950/40 border border-neutral-900 rounded-xl p-4 flex flex-col items-center justify-center text-center hover:border-neutral-800 hover:bg-neutral-900/10 transition-all group"
-                >
-                  <Github className="w-5 h-5 text-orange-500 mb-2" />
-                  <span className="text-[10px] font-mono text-neutral-500 block">GitHub Organization</span>
-                  <span className="text-white text-[11px] font-mono mt-1">sbce-codingclub</span>
-                </a>
-              </div>
+          <div className="relative space-y-4">
+            <div className="w-11 h-11 rounded-xl bg-orange-500/10 border border-orange-500/20 flex items-center justify-center">
+              <MapPin className="w-5 h-5 text-orange-500" />
+            </div>
+            <div className="space-y-2">
+              <h2 className="text-lg font-bold font-mono text-white flex items-center gap-2">
+                <span className="w-2.5 h-2.5 bg-orange-500 rounded-sm"></span>
+                Location
+              </h2>
+              <p className="text-neutral-400 text-xs leading-relaxed">{socials.location}</p>
             </div>
           </div>
 
-          {/* Map Section */}
-          <div className="space-y-3" id="map-section">
-            <span className="text-[10px] font-mono text-neutral-500 uppercase block tracking-wider">SBCE Campus Location Map</span>
-            <div className="relative border border-neutral-900 bg-zinc-950/40 p-2 rounded-xl overflow-hidden shadow-xl aspect-video w-full">
-              <iframe
-                title="SBCE Campus Location"
-                src={socials.mapEmbedUrl}
-                width="100%"
-                height="100%"
-                style={{ border: 0 }}
-                allowFullScreen={false}
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                className="rounded-lg grayscale filter"
-                id="contact-map-iframe"
-              ></iframe>
-            </div>
+          <div className="relative pt-6 mt-auto border-t border-white/10 space-y-3">
+            <span className="text-[10px] font-mono text-neutral-500 uppercase tracking-wider block">Department</span>
+            <p className="text-neutral-300 text-xs leading-relaxed">
+              Computer Science & Engineering, Sree Buddha College of Engineering — home base of the student developer collective.
+            </p>
           </div>
+
+          <a
+            href={socials.mapEmbedUrl.replace('/embed?pb=', '/place?q=')}
+            target="_blank"
+            rel="noreferrer"
+            className="
+              relative inline-flex items-center justify-center gap-2 w-full py-2.5 rounded-xl
+              bg-orange-600 hover:bg-orange-500 text-black font-mono text-xs font-bold uppercase tracking-wider
+              shadow-[0_0_20px_rgba(255,107,0,0.15)] hover:shadow-[0_0_28px_rgba(255,107,0,0.28)]
+              transition-all duration-300
+            "
+          >
+            Get Directions
+            <ArrowUpRight className="w-3.5 h-3.5" />
+          </a>
         </div>
 
-        {/* Right column - visual inquiry form */}
-        <div className="lg:col-span-7 bg-zinc-950/40 border border-neutral-900 rounded-xl p-6 md:p-8 flex flex-col justify-between" id="inquiry-form-wrapper">
-          <div className="space-y-6">
-            <h2 className="text-lg font-bold font-mono text-white flex items-center gap-2">
-              <span className="w-2.5 h-2.5 bg-orange-500 rounded-sm"></span>
-              Send Inquiry Ticket
-            </h2>
-
-            {isSubmitted ? (
-              <div className="py-12 flex flex-col items-center justify-center text-center space-y-4" id="form-success-state">
-                <div className="p-3 bg-orange-500/10 border border-orange-500/20 text-orange-500 rounded-full animate-bounce">
-                  <CheckCircle2 className="w-8 h-8" />
-                </div>
-                <div className="space-y-1">
-                  <h3 className="text-lg font-bold text-white font-mono">Inquiry Filed Successfully!</h3>
-                  <p className="text-neutral-400 text-xs">Our core committee will review your ticket and reply back via email shortly.</p>
-                </div>
-                <button
-                  id="reset-form-btn"
-                  onClick={() => setIsSubmitted(false)}
-                  className="px-4 py-2 border border-neutral-800 bg-black text-neutral-300 hover:text-white rounded-lg text-xs font-mono transition-colors focus:outline-none"
-                >
-                  Submit Another Ticket
-                </button>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-4" id="contact-inquiry-form">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div className="space-y-1.5">
-                    <label className="text-xs font-mono text-neutral-400" htmlFor="contact-name">Full Name *</label>
-                    <input
-                      id="contact-name"
-                      type="text"
-                      required
-                      placeholder="e.g. Rahul Kumar"
-                      value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="w-full bg-black border border-neutral-850 rounded-lg py-2 px-3 text-xs text-white placeholder-neutral-650 focus:outline-none focus:border-orange-500/50"
-                    />
-                  </div>
-                  <div className="space-y-1.5">
-                    <label className="text-xs font-mono text-neutral-400" htmlFor="contact-email">Email Address *</label>
-                    <input
-                      id="contact-email"
-                      type="email"
-                      required
-                      placeholder="e.g. rahul@example.com"
-                      value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className="w-full bg-black border border-neutral-850 rounded-lg py-2 px-3 text-xs text-white placeholder-neutral-650 focus:outline-none focus:border-orange-500/50"
-                    />
-                  </div>
-                </div>
-
-                <div className="space-y-1.5">
-                  <label className="text-xs font-mono text-neutral-400" htmlFor="contact-subject">Inquiry Subject</label>
-                  <input
-                    id="contact-subject"
-                    type="text"
-                    placeholder="e.g. Flutter bootcamp query / Sponsor details"
-                    value={formData.subject}
-                    onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                    className="w-full bg-black border border-neutral-850 rounded-lg py-2 px-3 text-xs text-white placeholder-neutral-650 focus:outline-none focus:border-orange-500/50"
-                  />
-                </div>
-
-                <div className="space-y-1.5">
-                  <label className="text-xs font-mono text-neutral-400" htmlFor="contact-message">Detail Message *</label>
-                  <textarea
-                    id="contact-message"
-                    required
-                    rows={5}
-                    placeholder="Describe your query in full detail so our committee can understand and respond appropriately..."
-                    value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    className="w-full bg-black border border-neutral-850 rounded-lg py-2 px-3 text-xs text-white placeholder-neutral-650 focus:outline-none focus:border-orange-500/50"
-                  ></textarea>
-                </div>
-
-                <button
-                  id="submit-form-btn"
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="w-full py-2.5 bg-orange-600 hover:bg-orange-500 text-black font-bold text-xs font-mono rounded-lg transition-all flex items-center justify-center gap-2 shadow-[0_0_15px_rgba(255,107,0,0.15)] disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none"
-                >
-                  {isSubmitting ? (
-                    <span>Dispatching Ticket...</span>
-                  ) : (
-                    <>
-                      <span>Dispatch Message</span>
-                      <Send className="w-3.5 h-3.5" />
-                    </>
-                  )}
-                </button>
-              </form>
-            )}
-          </div>
-
-          <div className="border-t border-neutral-900/60 pt-5 mt-6 text-[11px] text-neutral-500 font-mono leading-relaxed flex items-start gap-2">
-            <HelpCircle className="w-4 h-4 text-orange-500 shrink-0 mt-0.5" />
-            <span>Need immediate support on event logistics? Contact Department Secretary Dr. Saji V.R. or coordinators at the CSE office building directly.</span>
+        {/* Map Card */}
+        <div className="lg:col-span-8 space-y-3" id="map-section">
+          <div
+            className="
+              relative rounded-2xl overflow-hidden p-2 h-full min-h-[420px]
+              bg-white/[0.03] border border-white/10 backdrop-blur-xl
+              shadow-[0_8px_32px_rgba(0,0,0,0.35)]
+            "
+          >
+            <iframe
+              title="SBCE Campus Location"
+              src={socials.mapEmbedUrl}
+              width="100%"
+              height="100%"
+              style={{ border: 0, minHeight: '400px' }}
+              allowFullScreen={false}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              className="rounded-xl grayscale contrast-125 filter absolute inset-2"
+              id="contact-map-iframe"
+            ></iframe>
+            {/* Label chip */}
+            <span className="absolute top-4 left-4 z-10 px-3 py-1.5 rounded-full text-[10px] font-mono uppercase tracking-wider text-orange-300 bg-black/70 border border-orange-500/40 backdrop-blur-md">
+              SBCE Campus Map
+            </span>
+            {/* corner accents to match hero panel language */}
+            <div className="pointer-events-none absolute top-1 left-1 w-4 h-4 border-t-2 border-l-2 border-orange-500/50 rounded-tl-lg" />
+            <div className="pointer-events-none absolute bottom-1 right-1 w-4 h-4 border-b-2 border-r-2 border-orange-500/50 rounded-br-lg" />
           </div>
         </div>
       </div>

@@ -1,11 +1,6 @@
 import React from 'react';
-import { Users, Calendar, Trophy, FolderCode, ArrowUpRight, Github, Linkedin, Instagram, Mail, MapPin, Zap } from 'lucide-react';
+import { Users, Calendar, Trophy, FolderCode, ArrowUpRight, ArrowRight, Github, Linkedin, Instagram, Mail, MapPin, Zap, GitBranch } from 'lucide-react';
 import { Event, Member, Settings } from '../types';
-import heroImage from '../assets/images/HeroBG.png';
-import CE from '../assets/images/CE.png';
-import SB from '../assets/images/SB.png';
-import Logo from '../assets/images/Logo.png';
-import Code from '../assets/images/CodingClub.png'
 
 interface HomeViewProps {
   settings: Settings;
@@ -20,101 +15,142 @@ export default function HomeView({ settings, events, members, setTab, onSelectEv
   const upcomingEvents = events.filter(e => e.status !== 'Completed').slice(0, 2);
   const committeePreview = members.slice(0, 4);
 
-  // Static list of notable student projects (developer-themed)
-  const projects = [
-    {
-      title: "SBCE Campus Map",
-      description: "An interactive, open-source 3D layout navigator helping freshmen locate campus labs and auditoriums.",
-      tags: ["React", "Three.js", "Tailwind"],
-      github: "https://github.com/sbce-codingclub/campus-map"
-    },
-    {
-      title: "Automated Attendance QR",
-      description: "A fast, QR-code check-in utility deployed across CSE seminars for paperless event registration verification.",
-      tags: ["Node.js", "Express", "MongoDB", "QR API"],
-      github: "https://github.com/sbce-codingclub/qr-checkin"
-    },
-    {
-      title: "SBCE Devs Directory",
-      description: "A student portfolio index highlighting achievements, github streaks, and resumes of engineering seniors.",
-      tags: ["TypeScript", "Next.js", "Postgres"],
-      github: "https://github.com/sbce-codingclub/devs-index"
-    }
-  ];
-
   return (
     <div id="home-view">
       {/* ═══════════════════════════════════════════════
-          HERO – Full-viewport, matches Figma exactly
+          HERO — asymmetric split: identity left, the club
+          rendered as a live config file, right.
           ═══════════════════════════════════════════════ */}
-      <section className="hero-fullscreen" id="hero-section" style={{ marginTop: '-1px' }}>
+      <section
+        className="relative w-full min-h-screen overflow-hidden bg-black"
+        id="hero-section"
+        style={{ marginTop: '-1px' }}
+      >
+        {/* Fine grain — keeps the black from feeling flat */}
+        <div className="absolute inset-0 hero-grain pointer-events-none" aria-hidden="true" />
 
-        {/* Background image */}
+        {/* Blueprint grid — a quiet nod to the engineering department */}
+        <div className="absolute inset-0 hero-blueprint pointer-events-none" aria-hidden="true" />
+
+        {/* Directional ember glow, anchored behind the config panel */}
         <div
-          className="hero-bg"
-          style={{ backgroundImage: `url(${heroImage})` }}
-          id="hero-image-bg-container"
+          className="absolute top-[18%] right-[4%] w-[560px] h-[560px] hero-glow pointer-events-none"
+          aria-hidden="true"
         />
 
-        {/* Dark gradient overlay */}
-        <div className="hero-overlay" />
+        {/* Resolve cleanly into the page below */}
+        <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-black to-transparent pointer-events-none" aria-hidden="true" />
 
-        {/* Content – sits in the lower-left of the viewport */}
-        <div
-          className="relative z-10 flex flex-col items-start justify-end h-full"
-          style={{
-            paddingLeft: 'clamp(24px, 15.6vw, 220px)',
-            paddingRight: '5vw',
-            paddingBottom: 'clamp(40px, 6.25vw, 80px)',
-          }}
-          id="hero-content"
-        >
+        <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 lg:px-10 min-h-screen flex items-center pt-28 pb-16">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-14 lg:gap-10 items-center w-full">
 
-          {/* "CODING CLUB" – orange, Bungee font */}
-          <img
-            src={Code}
-            alt="Coding Club"
-            className="h-auto select-none"
-            style={{ width: 'clamp(180px, 32.4vw, 415px)', translate: "110px" }}
-            draggable={false}
-          />
+            {/* ── Left: identity & entry points ── */}
+            <div className="lg:col-span-7 space-y-8" id="hero-copy">
+              <h1
+                className="font-bungee text-white leading-[0.92] tracking-tight"
+                style={{ fontSize: 'clamp(2.75rem, 8vw, 6.25rem)' }}
+                id="hero-headline"
+              >
+                <span className="block hero-reveal" style={{ animationDelay: '90ms' }}>CODING</span>
+                <span className="block hero-reveal" style={{ animationDelay: '180ms' }}>CLUB</span>
+                <span className="block hero-reveal text-orange-500" style={{ animationDelay: '270ms' }}>SBCE</span>
+              </h1>
 
-          {/* "S3" solid + "CE" glass – giant letters row */}
-          <div
-            className="flex items-end mt-2"
-            style={{ gap: 'clamp(20px, 5.7vw, 36px)', translate: "110px"}}
-          >
-            <img
-              src={SB}
-              alt="SB"
-              className="select-none"
-              style={{ height: 'clamp(90px, 22vw, 282px)', width: 'auto' }}
-              draggable={false}
-            />
-            <img
-              src={CE}
-              alt="CE"
-              className="select-none"
-              style={{ height: 'clamp(90px, 22vw, 282px)', width: 'auto' }}
-              draggable={false}
-            />
+              <p
+                className="hero-reveal max-w-md text-neutral-400 text-sm md:text-base leading-relaxed"
+                style={{ animationDelay: '360ms' }}
+                id="hero-tagline"
+              >
+                The student developer collective at SBCE. We run hackathons, ship
+                open-source between lectures, and turn CSE coursework into things
+                people actually use.
+              </p>
+
+              <div
+                className="hero-reveal flex flex-wrap items-center gap-4"
+                style={{ animationDelay: '450ms' }}
+                id="hero-actions"
+              >
+                <button
+                  onClick={() => setTab('events')}
+                  className="hero-btn-explore"
+                  id="hero-explore-events-btn"
+                >
+                  <span>Explore Events</span>
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+                <button
+                  onClick={() => setTab('about')}
+                  className="hero-btn-explore"
+                  id="hero-explore-events-btn"
+                >
+                  <span>Meet Our Execom</span>
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+
+              </div>
+            </div>
+
+            {/* ── Right: signature element — the club as a config file ── */}
+            <div className="lg:col-span-5 hero-reveal" style={{ animationDelay: '300ms' }} id="hero-panel-wrap">
+              <div
+                className="
+                  relative rounded-2xl overflow-hidden
+                  bg-white/[0.03] border border-white/10 backdrop-blur-xl
+                  shadow-[0_20px_60px_rgba(0,0,0,0.5)]
+                "
+                id="hero-code-panel"
+              >
+                {/* Tab strip */}
+                <div className="flex items-center justify-between px-5 py-3 border-b border-white/10 bg-black/40">
+                  <div className="flex items-center gap-2 text-neutral-400">
+                    <span className="w-1.5 h-1.5 rounded-full bg-orange-500/70" />
+                    <span className="text-[11px] font-mono">club.config.ts</span>
+                  </div>
+                  <div className="flex items-center gap-1.5 text-neutral-600">
+                    <GitBranch className="w-3 h-3" />
+                    <span className="text-[10px] font-mono">main</span>
+                  </div>
+                </div>
+
+                {/* Code body */}
+                <div className="p-6 font-mono text-[12.5px] leading-[1.9] overflow-x-auto">
+                  <pre className="text-neutral-300">
+                    <span className="hero-code-line block text-neutral-600 italic" style={{ animationDelay: '620ms' }}>
+                      {'// student-run, not corporate-run'}
+                    </span>
+                    <span className="hero-code-line block" style={{ animationDelay: '700ms' }}>
+                      <span className="text-orange-500">export const</span> club = {'{'}
+                    </span>
+                    <span className="hero-code-line block pl-4" style={{ animationDelay: '780ms' }}>
+                      <span className="text-neutral-500">name:</span> <span className="text-white">"SBCE Coding Club"</span>,
+                    </span>
+                    <span className="hero-code-line block pl-4" style={{ animationDelay: '860ms' }}>
+                      <span className="text-neutral-500">dept:</span> <span className="text-white">"Computer Science & Engineering"</span>,
+                    </span>
+                    <span className="hero-code-line block pl-4" style={{ animationDelay: '940ms' }}>
+                      <span className="text-neutral-500">founded:</span> <span className="text-white">2021</span>,
+                    </span>
+                    <span className="hero-code-line block pl-4" style={{ animationDelay: '1020ms' }}>
+                      <span className="text-neutral-500">ships:</span> [<span className="text-white">"hackathons"</span>, <span className="text-white">"workshops"</span>, <span className="text-white">"OSS"</span>],
+                    </span>
+                    <span className="hero-code-line block pl-4" style={{ animationDelay: '1100ms' }}>
+                      <span className="text-neutral-500">status:</span> <span className="text-white">"actively building"</span>
+                      <span className="hero-cursor">&#9608;</span>
+                    </span>
+                    <span className="hero-code-line block" style={{ animationDelay: '1180ms' }}>
+                      {'};'}
+                    </span>
+                  </pre>
+                </div>
+              </div>
+
+              <p className="mt-4 text-[10px] font-mono text-neutral-600 text-center" id="hero-panel-caption">
+                version-controlled, like everything else we build
+              </p>
+            </div>
+
           </div>
-
-          {/* "EXPLORE EVENTS" button – centered under the lockup */}
-          <div
-            className="w-full flex justify-center"
-            style={{ marginTop: 'clamp(28px, 5.16vw, 66px)', translate: "-65px" }}
-            id="hero-actions"
-          >
-            <button
-              onClick={() => setTab('events')}
-              className="hero-btn-explore"
-              id="hero-explore-events-btn"
-            >
-              EXPLORE EVENTS
-            </button>
-          </div>
-
         </div>
       </section>
 
@@ -142,202 +178,107 @@ export default function HomeView({ settings, events, members, setTab, onSelectEv
           </div>
         </section>
 
-        {/* Domains Module */}
-        <section className="space-y-8" id="domains-section">
-          <div className="max-w-2xl space-y-2">
-            <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-white font-mono border-l-4 border-orange-500 pl-3">
-              Core Learning Domains
-            </h2>
-            <p className="text-neutral-400 text-sm md:text-base">
-              We categorize our technical activities into four structured domains where students study, build, and challenge peers.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6" id="domains-grid">
-            {[
-              {
-                title: "Full Stack Development",
-                desc: "Building scalable backend microservices, real-time databases, and responsive modern user interfaces in React, Express, and databases.",
-                badge: "Modern Web"
-              },
-              {
-                title: "Competitive Programming",
-                desc: "Polishing algorithm mastery, complexity parsing, and rapid problem-solving on portals like LeetCode, Codeforces, and HackerRank.",
-                badge: "Algorithms"
-              },
-              {
-                title: "Mobile App Engineering",
-                desc: "Learning responsive cross-platform architectures, reactive states, and material styling guides with modern Flutter and Dart.",
-                badge: "Flutter/Dart"
-              },
-              {
-                title: "Open Source Ecosystems",
-                desc: "Developing software transparently. Gaining knowledge of distributed version control, pull workflows, licensing, and community codebases.",
-                badge: "Git/GitHub"
-              }
-            ].map((dom, idx) => (
-              <div key={idx} id={`domain-card-${idx}`} className="bg-zinc-950/40 border border-neutral-900 rounded-xl p-6 hover:border-orange-500/20 transition-all duration-300 group hover:-translate-y-1">
-                <div className="flex justify-between items-start mb-4">
-                  <span className="font-mono text-xs text-orange-500 px-2 py-0.5 border border-orange-500/20 rounded-full">{dom.badge}</span>
-                  <span className="text-neutral-800 font-mono text-2xl font-bold group-hover:text-neutral-700">0{idx + 1}</span>
-                </div>
-                <h3 className="text-lg font-bold text-white mb-2 font-mono group-hover:text-orange-400 transition-colors">{dom.title}</h3>
-                <p className="text-neutral-400 text-xs leading-relaxed">{dom.desc}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
         {/* Upcoming Events Preview */}
         <section className="grid grid-cols-1 lg:grid-cols-12 gap-12" id="upcoming-events-preview-section">
-          <div className="lg:col-span-4 space-y-6">
-            <div className="space-y-2">
-              <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-white font-mono border-l-4 border-orange-500 pl-3">
-                Upcoming Milestones
-              </h2>
-              <p className="text-neutral-400 text-sm">
-                Do not miss out! Check out what events we are hosting next on the campus. Make sure to complete your registration.
-              </p>
-            </div>
-            <button
-              onClick={() => setTab('events')}
-              className="inline-flex items-center gap-2 text-sm font-mono text-orange-500 hover:text-orange-400 transition-colors group focus:outline-none"
-              id="view-all-events-preview-btn"
-            >
-              <span>View All Schedule</span>
-              <ArrowUpRight className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-            </button>
-          </div>
-
           <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-6" id="upcoming-events-preview-grid">
             {upcomingEvents.length > 0 ? (
               upcomingEvents.map((evt) => (
                 <div
                   key={evt.id}
                   id={`upcoming-preview-card-${evt.id}`}
-                  className="bg-black border border-neutral-900 rounded-xl overflow-hidden hover:border-neutral-800 transition-all flex flex-col group cursor-pointer"
+                  className="
+            group relative rounded-2xl overflow-hidden cursor-pointer flex flex-col
+            bg-white/[0.03] border border-white/10 backdrop-blur-xl
+            shadow-[0_8px_32px_rgba(0,0,0,0.35)]
+            transition-all duration-500 ease-out
+            hover:-translate-y-1.5 hover:border-orange-500/30
+            hover:shadow-[0_24px_55px_rgba(0,0,0,0.5),0_0_40px_rgba(255,107,0,0.14)]
+          "
                   onClick={() => onSelectEvent(evt)}
                 >
+                  {/* Animated gradient border glow ring */}
+                  <div
+                    className="
+              pointer-events-none absolute -inset-px rounded-2xl opacity-0 group-hover:opacity-100
+              transition-opacity duration-500 -z-10
+              bg-[conic-gradient(from_0deg,rgba(255,107,0,0.5),transparent_25%,transparent_75%,rgba(255,107,0,0.5))]
+              animate-[spin_4s_linear_infinite]
+            "
+                  />
+                  <div className="absolute inset-[1px] rounded-2xl bg-black/70 -z-10" />
+
+                  {/* Banner image */}
                   <div className="aspect-video relative overflow-hidden bg-neutral-950">
-                    <img src={evt.banner} alt={evt.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                    <span className="absolute top-3 right-3 px-2 py-0.5 bg-orange-600 text-black text-[10px] font-bold font-mono uppercase tracking-wider rounded">
+                    <img
+                      src={evt.banner}
+                      alt={evt.title}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
+                    />
+                    {/* Bottom gradient for legibility / depth */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/10 to-transparent" />
+                    {/* Diagonal shine sweep */}
+                    <div
+                      className="
+                absolute top-0 -left-full w-1/2 h-full
+                bg-gradient-to-r from-transparent via-white/20 to-transparent
+                skew-x-[-20deg] group-hover:left-[150%]
+                transition-[left] duration-1000 ease-out
+              "
+                    />
+
+                    {/* Status pill – glassy */}
+                    <span
+                      className="
+                absolute top-3 right-3 px-2.5 py-1 rounded-full text-[10px] font-bold font-mono uppercase tracking-wider
+                text-orange-300 bg-black/50 border border-orange-500/40 backdrop-blur-md
+                shadow-[0_0_14px_rgba(255,107,0,0.2)]
+                flex items-center gap-1.5
+              "
+                    >
+                      <span className="relative flex h-1.5 w-1.5">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-70" />
+                        <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-orange-400" />
+                      </span>
                       {evt.status}
                     </span>
                   </div>
-                  <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
+
+                  {/* Body */}
+                  <div className="relative p-5 flex-1 flex flex-col justify-between space-y-4">
                     <div className="space-y-2">
-                      <span className="font-mono text-[10px] text-neutral-500 uppercase tracking-widest">{evt.date} • {evt.venue}</span>
-                      <h3 className="text-base font-bold text-white group-hover:text-orange-400 transition-colors font-mono line-clamp-1">{evt.title}</h3>
-                      <p className="text-neutral-400 text-xs line-clamp-2">{evt.description}</p>
+                      <span className="font-mono text-[10px] text-neutral-500 uppercase tracking-widest">
+                        {evt.date} • {evt.venue}
+                      </span>
+                      <h3 className="text-base font-bold text-white group-hover:text-orange-400 transition-colors duration-300 font-mono line-clamp-1">
+                        {evt.title}
+                      </h3>
+                      <p className="text-neutral-400 text-xs line-clamp-2 leading-relaxed">{evt.description}</p>
                     </div>
-                    <div className="flex items-center justify-between text-xs font-mono pt-2 border-t border-neutral-950">
-                      <span className="text-orange-500/80">Register Now</span>
-                      <ArrowUpRight className="w-4 h-4 text-neutral-600 group-hover:text-orange-500 transition-colors" />
+
+                    <div className="flex items-center justify-between text-xs font-mono pt-3 border-t border-white/10">
+                      <span className="text-orange-500/80 group-hover:text-orange-400 transition-colors">
+                        Register Now
+                      </span>
+                      <span
+                        className="
+                  flex items-center justify-center w-7 h-7 rounded-full
+                  bg-white/[0.04] border border-white/10 text-neutral-500
+                  group-hover:bg-orange-500 group-hover:border-orange-500 group-hover:text-black
+                  group-hover:translate-x-0.5 group-hover:-translate-y-0.5
+                  transition-all duration-300
+                "
+                      >
+                        <ArrowUpRight className="w-3.5 h-3.5" />
+                      </span>
                     </div>
                   </div>
                 </div>
               ))
             ) : (
-              <div className="sm:col-span-2 border border-dashed border-neutral-900 rounded-xl p-8 text-center text-neutral-500 font-mono text-sm">
+              <div className="sm:col-span-2 border border-dashed border-white/10 rounded-2xl p-8 text-center text-neutral-500 font-mono text-sm bg-white/[0.02] backdrop-blur-sm">
                 All currently scheduled events are successfully completed. Stay tuned for new tracks!
               </div>
             )}
-          </div>
-        </section>
-
-        {/* Projects Showcase */}
-        <section className="space-y-8" id="projects-showcase-section">
-          <div className="max-w-2xl space-y-2">
-            <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-white font-mono border-l-4 border-orange-500 pl-3">
-              Open-Source Initiatives
-            </h2>
-            <p className="text-neutral-400 text-sm md:text-base">
-              These are utility systems built collaboratively by SBCE student teams to solve immediate campus and club logistical operations.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6" id="projects-showcase-grid">
-            {projects.map((proj, i) => (
-              <div key={i} id={`project-card-${i}`} className="bg-zinc-950/40 border border-neutral-900 rounded-xl p-6 flex flex-col justify-between hover:border-neutral-800 transition-all group">
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <FolderCode className="w-6 h-6 text-orange-500" />
-                    <a href={proj.github} target="_blank" rel="noreferrer" className="p-1.5 rounded-full bg-neutral-900 text-neutral-400 hover:text-white transition-colors">
-                      <Github className="w-4 h-4" />
-                    </a>
-                  </div>
-                  <h3 className="text-lg font-bold text-white font-mono group-hover:text-orange-400 transition-colors">{proj.title}</h3>
-                  <p className="text-neutral-400 text-xs leading-relaxed">{proj.description}</p>
-                </div>
-                <div className="flex flex-wrap gap-2 pt-6" id={`project-tags-${i}`}>
-                  {proj.tags.map((tag, j) => (
-                    <span key={j} className="font-mono text-[9px] text-neutral-500 px-2 py-0.5 bg-neutral-950 border border-neutral-900 rounded">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* 4.2 Executive Committee Preview */}
-        <section className="space-y-8" id="execom-preview-section">
-          <div className="flex flex-wrap items-end justify-between gap-4">
-            <div className="max-w-2xl space-y-2">
-              <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-white font-mono border-l-4 border-orange-500 pl-3">
-                Leadership Board
-              </h2>
-              <p className="text-neutral-400 text-sm md:text-base">
-                Meet the executive committee steering curriculum planning, workshop logistics, and student coordination.
-              </p>
-            </div>
-            <button
-              onClick={() => setTab('about')}
-              className="px-4 py-2 text-xs font-mono text-neutral-400 hover:text-white border border-neutral-900 hover:border-neutral-800 rounded-lg transition-all focus:outline-none"
-              id="view-full-team-btn"
-            >
-              Meet Full Committee
-            </button>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" id="execom-preview-grid">
-            {committeePreview.map((mem) => (
-              <div key={mem.id} id={`execom-member-${mem.id}`} className="bg-zinc-950/40 border border-neutral-900 rounded-xl overflow-hidden p-4 hover:border-neutral-800 transition-all group">
-                <div className="aspect-square w-full rounded-lg overflow-hidden bg-neutral-950 mb-4 border border-neutral-900">
-                  <img src={mem.image} alt={mem.name} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" />
-                </div>
-                <div className="space-y-2">
-                  <span className="font-mono text-[10px] uppercase text-orange-500 tracking-wider font-bold">{mem.position}</span>
-                  <h3 className="text-base font-bold text-white font-mono leading-tight">{mem.name}</h3>
-                  <p className="text-neutral-500 text-xs line-clamp-2 leading-relaxed">{mem.bio}</p>
-
-                  {/* Social links */}
-                  <div className="flex items-center gap-3 pt-3 text-neutral-500 border-t border-neutral-950">
-                    {mem.github && (
-                      <a href={mem.github} target="_blank" rel="noreferrer" className="hover:text-white transition-colors">
-                        <Github className="w-4 h-4" />
-                      </a>
-                    )}
-                    {mem.linkedin && (
-                      <a href={mem.linkedin} target="_blank" rel="noreferrer" className="hover:text-white transition-colors">
-                        <Linkedin className="w-4 h-4" />
-                      </a>
-                    )}
-                    {mem.instagram && (
-                      <a href={mem.instagram} target="_blank" rel="noreferrer" className="hover:text-white transition-colors">
-                        <Instagram className="w-4 h-4" />
-                      </a>
-                    )}
-                    {mem.email && (
-                      <a href={`mailto:${mem.email}`} className="hover:text-white transition-colors">
-                        <Mail className="w-4 h-4" />
-                      </a>
-                    )}
-                  </div>
-                </div>
-              </div>
-            ))}
           </div>
         </section>
 
