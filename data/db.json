@@ -1,0 +1,154 @@
+{
+  "admin": {
+    "email": "admin@sbce.ac.in",
+    "password": "admin"
+  },
+  "members": [
+    {
+      "id": "m1",
+      "name": "Dr. Saji V.R.",
+      "position": "Faculty Coordinator",
+      "bio": "Head of Computer Science & Engineering department, supporting student innovations, research and technical growth across all semesters.",
+      "image": "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=500&auto=format&fit=crop&q=80",
+      "linkedin": "https://linkedin.com",
+      "github": "",
+      "instagram": "",
+      "email": "saji.vr@sbce.ac.in",
+      "display_order": 1
+    },
+    {
+      "id": "m2",
+      "name": "Rahul R.",
+      "position": "Student Lead / Chairman",
+      "bio": "Full Stack Developer, passionate about building community tools, hosting hackathons, and mentoring juniors in React & Node.",
+      "image": "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=500&auto=format&fit=crop&q=80",
+      "linkedin": "https://linkedin.com",
+      "github": "https://github.com",
+      "instagram": "https://instagram.com",
+      "email": "rahul@sbce.ac.in",
+      "display_order": 2
+    },
+    {
+      "id": "m3",
+      "name": "Anjana Sen",
+      "position": "Secretary",
+      "bio": "UI/UX enthusiast and competitive programmer. Leads workshop schedules, public relations, and club administrative tasks.",
+      "image": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=500&auto=format&fit=crop&q=80",
+      "linkedin": "https://linkedin.com",
+      "github": "https://github.com",
+      "instagram": "https://instagram.com",
+      "email": "anjana@sbce.ac.in",
+      "display_order": 3
+    },
+    {
+      "id": "m4",
+      "name": "Abhijit Nair",
+      "position": "Tech Lead",
+      "bio": "Linux power user and backend architect. Specializes in Node.js, systems programming, and competitive coding strategies.",
+      "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500&auto=format&fit=crop&q=80",
+      "linkedin": "https://linkedin.com",
+      "github": "https://github.com",
+      "instagram": "",
+      "email": "abhijit@sbce.ac.in",
+      "display_order": 4
+    }
+  ],
+  "events": [
+    {
+      "id": "e2",
+      "title": "Introduction to Open Source",
+      "description": "Kickstart your open source journey! Learn git fundamentals, branching strategy, and pull request mechanics while contributing to collaborative community repositories.",
+      "banner": "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&auto=format&fit=crop&q=80",
+      "venue": "SBCE Auditorium",
+      "date": "2026-07-24",
+      "time": "02:00 PM",
+      "speaker": "Rahul R. & Abhijit Nair",
+      "status": "Upcoming",
+      "registration_link": "https://forms.gle/demo-git-intro",
+      "certificate_link": "",
+      "created_at": "2026-07-10T11:00:00.000Z",
+      "updated_at": "2026-07-10T11:00:00.000Z"
+    },
+    {
+      "id": "e3",
+      "title": "SBCE Hackfest 2026",
+      "description": "A thrilling 24-hour hackathon where student developers collaborate in teams to build innovative, solid-color designed solutions addressing modern campus problems.",
+      "banner": "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=800&auto=format&fit=crop&q=80",
+      "venue": "CSE Labs & Main Library Lounge",
+      "date": "2026-08-15",
+      "time": "09:00 AM",
+      "speaker": "Coding Club Mentoring Panel",
+      "status": "Upcoming",
+      "registration_link": "https://forms.gle/demo-sbce-hackfest",
+      "certificate_link": "",
+      "created_at": "2026-07-12T14:30:00.000Z",
+      "updated_at": "2026-07-12T14:30:00.000Z"
+    }
+  ],
+  "gallery": [
+    {
+      "id": "g1",
+      "event_id": "e1",
+      "image_url": "https://images.unsplash.com/photo-1515187029135-18ee286d815b?w=800&auto=format&fit=crop&q=80",
+      "caption": "Interactive coding session during Flutter Bootcamp Day 1."
+    },
+    {
+      "id": "g2",
+      "event_id": "e1",
+      "image_url": "https://images.unsplash.com/photo-1531482615713-2afd69097998?w=800&auto=format&fit=crop&q=80",
+      "caption": "Group photograph of students who completed their final mobile project."
+    },
+    {
+      "id": "g3",
+      "event_id": "e2",
+      "image_url": "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=800&auto=format&fit=crop&q=80",
+      "caption": "Hands-on installation and git configuration guidance."
+    },
+    {
+      "id": "g4",
+      "event_id": "all",
+      "image_url": "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&auto=format&fit=crop&q=80",
+      "caption": "Inaugural address of CSE Coding Club activities for the academic year."
+    }
+  ],
+  "settings": {
+    "heroText": "CSE SBCE Coding Club",
+    "heroSubtext": "Sree Buddha College of Engineering, Pattoor",
+    "heroTagline": "Empowering the next generation of developers and software architects through collaborative hacking, hands-on bootcamps, and engineering excellence.",
+    "aboutHistory": "Established in 2021 by the Department of Computer Science & Engineering, the SBCE Coding Club has grown into the campus hub for technological leadership. We connect aspiring programmers, open-source advocates, and problem solvers to learn together, build for the community, and prepare for premium tech careers.",
+    "aboutMission": "To nurture a robust and inclusive developer ecosystem on campus where students learn modern engineering practices by doing.",
+    "aboutVision": "To produce top-tier technical talent capable of engineering solutions for national and global challenges, setting a benchmark for student-run technical communities in Kerala.",
+    "aboutObjectives": [
+      "Conduct weekly code-along labs and specialized bootcamps on industry-relevant frameworks.",
+      "Foster active open-source contributions on GitHub and participation in global hackathons.",
+      "Deliver rigorous peer mentorship for technical interviews, DSA, and competitive coding.",
+      "Design and deploy open-source utility systems to solve immediate needs of the college community."
+    ],
+    "aboutCoordinators": [
+      {
+        "name": "Dr. Saji V.R.",
+        "title": "HOD, CSE Dept"
+      },
+      {
+        "name": "Prof. Soumya Murali",
+        "title": "Assistant Professor, CSE Dept"
+      }
+    ],
+    "statistics": {
+      "members": 240,
+      "events": 28,
+      "hackathons": 5,
+      "projects": 12,
+      "yearsActive": 5
+    },
+    "socialLinks": {
+      "email": "codingclub@sbce.ac.in",
+      "instagram": "https://instagram.com/sbce_codingclub",
+      "linkedin": "https://linkedin.com/company/sbce-codingclub",
+      "github": "https://github.com/sbce-codingclub",
+      "location": "Sree Buddha College of Engineering, Pattoor, Nooranad, Alappuzha, Kerala - 690529",
+      "mapEmbedUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3936.815309325603!2d76.6042171147889!3d9.171249993421379!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b06117f77777777%3A0x6b4f707cfbdfa9f7!2sSree%20Buddha%20College%20of%20Engineering%20%2C%20Pattoor!5e0!3m2!1sen!2sin!4v1626245999999!5m2!1sen!2sin"
+    },
+    "footerText": "© 2026 CSE SBCE Coding Club. Engineered for developers, by developers."
+  }
+}
